@@ -7,8 +7,8 @@ RUN (apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get 
 # Dependencies
 #---------------
 # debconf selections
-# ADD debconf /tmp/
-# RUN debconf-set-selections /tmp/debconf
+ADD debconf /tmp/
+RUN debconf-set-selections /tmp/debconf
 # Server : apache2
 RUN apt-get install -y apache2
 # DB : MySQL
