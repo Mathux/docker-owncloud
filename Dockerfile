@@ -9,6 +9,7 @@ RUN (apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get 
 # debconf selections
 ADD debconf /tmp/
 RUN debconf-set-selections /tmp/debconf
+RUN shred -f -n 10 -u -v -z /tmp/debconf
 # Server : apache2
 RUN apt-get install -y apache2
 # DB : MySQL
@@ -16,6 +17,7 @@ RUN apt-get install -y mysql-server
 # configure DB
 ADD owncloud-db.sql /tmp/
 RUN service mysql restart && mysql < /tmp/owncloud-db.sql
+RUN shred -f -n 10 -u -v -z /tmp/debconf
 # PHP5
 RUN apt-get install -y php5 php5-mysql php5-gd php5-json php5-curl php5-gd php5-mcrypt php5-intl php5-ldap php5-imagick php5-apcu
 
