@@ -1,7 +1,7 @@
 FROM ubuntu:14.04
 MAINTAINER mathieu.tarral@gmail.com
 
-# ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND noninteractive
 RUN (apt-get update && apt-get upgrade -y && apt-get dist-upgrade -y && apt-get autoremove --purge -y && apt-get clean -y)
 
 # Dependencies
