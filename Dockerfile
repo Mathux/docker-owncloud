@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM debian:latest
 MAINTAINER mathieu.tarral@gmail.com
 
 ENV DEBIAN_FRONTEND noninteractive
@@ -11,15 +11,15 @@ ADD debconf /tmp/
 RUN debconf-set-selections /tmp/debconf
 RUN shred -f -n 10 -u -v -z /tmp/debconf
 # Server : apache2
-RUN apt-get install -y apache2
+RUN apt-get install -y nginx
 # DB : MySQL
 RUN apt-get install -y mysql-server
 # configure DB
 ADD owncloud-db.sql /tmp/
 RUN service mysql restart && mysql < /tmp/owncloud-db.sql
-RUN shred -f -n 10 -u -v -z /tmp/debconf
+RUN shred -f -n 10 -u -v -z /tmp/owncloud-db.sql
 # PHP5
-RUN apt-get install -y php5 php5-mysql php5-gd php5-json php5-curl php5-gd php5-mcrypt php5-intl php5-ldap php5-imagick php5-apcu
+RUN apt-get install -y php5 php5-mysql php5-gd php5-json php5-curl php5-gd php5-mcrypt php5-intl php5-ldap php5-imagick php-apc
 
 # General
 RUN apt-get install -y bzip2 vim htop wget
@@ -33,24 +33,10 @@ RUN wget 'https://owncloud.org/owncloud.asc' -O /tmp/owncloud.asc
 RUN gpg --import /tmp/owncloud.asc
 RUN gpg --verify /tmp/owncloud.tar.bz2.asc 
 # RUN sha256sum /tmp/owncloud.tar.bz2 | diff /tmp/owncloud.sha256 -
+RUN mkdir -p /var/www
 RUN tar xjf /tmp/owncloud.tar.bz2 -C /var/www
 RUN chown -R www-data:www-data /var/www/owncloud
-
-# Apache Site config
-#-----------------
-RUN a2dissite 000-default
-ADD owncloud.conf /etc/apache2/sites-available/
-RUN a2ensite owncloud
-RUN a2enmod rewrite ssl
-
-
-# Reload Apache2
-#-----------------
-RUN service apache2 restart
 
 EXPOSE 22
 EXPOSE 80
 EXPOSE 443
-
-ENTRYPOINT ["/usr/sbin/apache2"]
-CMD ["-D", "FOREGROUND"]
