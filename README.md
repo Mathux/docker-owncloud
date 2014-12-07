@@ -9,7 +9,7 @@ OwnCloud version : `7.0.3`
 
 - Replace `db_root_password` and `db_user_password` in both `debconf` and
 `db-owncloud.sql` files
-- Add your SSL certificate in the current directory
+- Add your SSL certificates in the current directory
 (default filenames are `cert.key` and `cert.crt`)
 
 # Build
