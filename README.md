@@ -24,3 +24,7 @@ Moreover, you can export the OwnCloud `data` directory on the host with volume
 binding :
 
     docker run -d -p 80:80 -p 443:443 "$(pwd)/data:/data" owncloud
+
+with `$(pwd)/data` being the full path to your desired host data directory.
+Also, don't forget to set `/data` as your data directory in the OwnCloud 
+installation wizard.
