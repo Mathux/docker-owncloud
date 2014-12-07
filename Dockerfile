@@ -24,7 +24,6 @@ RUN mkdir -p /etc/ssl/nginx
 ADD cert.crt /etc/ssl/nginx/
 ADD cert.key /etc/ssl/nginx/
 RUN chown www-data:www-data -R /etc/ssl/nginx
-RUN update-rc.d nginx enable
 
 # Mysql
 #----------------
@@ -37,7 +36,6 @@ RUN shred -f -n 0 -u -v -z /tmp/owncloud-db.sql
 # PHP5
 #-----------------
 RUN apt-get install -y php5 php5-fpm php5-mysql php5-gd php5-json php5-curl php5-gd php5-mcrypt php5-intl php5-ldap php5-imagick php5-apcu
-RUN update-rc.d php5-fpm enable
 
 # Owncloud
 #----------------
@@ -58,6 +56,6 @@ RUN chown -R www-data:www-data /var/www/owncloud
 VOLUME /data
 RUN chown -R www-data:www-data /data
 
-EXPOSE 22
-EXPOSE 80
-EXPOSE 443
+EXPOSE 80 443
+# TODO : supervisor :)
+CMD service php5-fpm start && service mysql start && service nginx start && chown www-data:www-data /data && while true; do sleep 1d; done
