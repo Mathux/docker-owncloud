@@ -39,9 +39,9 @@ RUN apt-get install -y php5 php5-fpm php5-mysql php5-gd php5-json php5-curl php5
 
 # Owncloud
 #----------------
-RUN wget 'https://download.owncloud.org/community/owncloud-7.0.3.tar.bz2' -O /tmp/owncloud.tar.bz2 \
-    && wget 'https://download.owncloud.org/community/owncloud-7.0.3.tar.bz2.sha256' -O /tmp/owncloud.sha256 \
-    && wget 'https://download.owncloud.org/community/owncloud-7.0.3.tar.bz2.asc' -O /tmp/owncloud.tar.bz2.asc \
+RUN wget 'https://download.owncloud.org/community/owncloud-7.0.4.tar.bz2' -O /tmp/owncloud.tar.bz2 \
+    && wget 'https://download.owncloud.org/community/owncloud-7.0.4.tar.bz2.sha256' -O /tmp/owncloud.sha256 \
+    && wget 'https://download.owncloud.org/community/owncloud-7.0.4.tar.bz2.asc' -O /tmp/owncloud.tar.bz2.asc \
     && wget 'https://owncloud.org/owncloud.asc' -O /tmp/owncloud.asc \
     && gpg --import /tmp/owncloud.asc \
     && gpg --verify /tmp/owncloud.tar.bz2.asc \
