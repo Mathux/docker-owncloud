@@ -3,7 +3,7 @@ docker-owncloud
 
 Dockerfile for OwnCloud 8
 
-OwnCloud version : `8.0.0
+OwnCloud version : `8.0.0`
 
 # Information
 
