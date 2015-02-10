@@ -1,0 +1,21 @@
+FROM fedora:20
+
+# Add OwnCloud Community repo and install OwnCloud
+#-------------------------------------------------
+RUN yum -y install wget && \
+    wget http://download.opensuse.org/repositories/isv:ownCloud:community/Fedora_20/isv:ownCloud:community.repo -O /etc/yum.repos.d/isv:ownCloud:community.repo && \
+    yum -y install owncloud
+
+# Add Postgresql DB support
+#--------------------------
+RUN yum -y install php-pgsql
+
+# PHP configuration
+#------------------
+ADD owncloud.ini /etc/php.d/
+
+# Direct access (no /owncloud in URL)
+#------------------------------------
+RUN sed -i -e 's/^DocumentRoot "\/var\/www\/html"/DocumentRoot "\/var\/www\/html\/owncloud"/' /etc/httpd/conf/httpd.conf
+
+CMD /usr/sbin/httpd -DFOREGROUND

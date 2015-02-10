@@ -1,30 +1,55 @@
 docker-owncloud
 ===============
 
-Dockerfile for OwnCloud 7
+Dockerfile for OwnCloud 8
 
-OwnCloud version : `7.0.3`
+OwnCloud version : `8.0.0
 
-# Setup
+# Information
 
-- Replace `db_root_password` and `db_user_password` in both `debconf` and
-`db-owncloud.sql` files
-- Add your SSL certificates in the current directory
-(default filenames are `cert.key` and `cert.crt`)
+This setup will run OwnCloud in Docker, using the Data only containers pattern
+for both files and database.
 
-# Build
+You will end up with the following Docker containers :
 
-    docker build -t owncloud .
+- `oc-data-files` : OwnCloud files (`owncloud/data` and `owncloud/config`)
+- `oc-data-db` : OwnCloud Database (`/var/lib/prosgresql/data`)
+- `oc-postgres` : Container running the Database (`Postgresql`)
+- `oc-server` : Container running the server (`Apache2` on Fedora)
 
-# Run
+# Step 1 : Data only containers
 
-    docker run -d -p 80:80 -p 443:443 owncloud
+    cd data/
 
-Moreover, you can export the OwnCloud `data` directory on the host with volume
-binding :
+build the image responsible for file storage and configuration :
 
-    docker run -d -p 80:80 -p 443:443 "$(pwd)/data:/data" owncloud
+    docker build -t oc-data-files .
 
-with `$(pwd)/data` being the full path to your desired host data directory.
-Also, don't forget to set `/data` as your data directory in the OwnCloud 
-installation wizard.
+then use `./run.sh` to create the Data only containers :
+
+- `oc-data-files`
+- `oc-data-db`
+
+# Step 2 : Database setup
+
+    cd db/
+
+Edit `init-owncloud-postgres.sh` and configure the database credentials :
+
+- `USERNAME`
+- `PASSWORD`
+- `DB`
+
+Then build `oc-postgres` image :
+
+    docker build -t oc-postgres .
+
+And run it with `./run.sh`
+
+# Step 3 : Run the server
+
+Get back to the top of the repository, and build the `oc-server` image :
+
+    docker build -t oc-server .
+
+And use `./run.sh` to run the server !
