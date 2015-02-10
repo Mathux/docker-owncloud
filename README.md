@@ -53,3 +53,12 @@ Get back to the top of the repository, and build the `oc-server` image :
     docker build -t oc-server .
 
 And use `./run.sh` to run the server !
+
+# OwnCloud setup wizard
+
+- select `postgresql` storage
+- change `localhost` to `db` (`db` is the name you choose on the docker command line, when you want to link a container with another. here `--link oc-postgres:db`)
+
+# References
+
+- [OwnCloud in a container](http://www.herr-norbert.de/2014/10/04/docker-owncloud/)
