@@ -1,12 +1,12 @@
 #!/bin/bash
 
-USERNAME="owncloud"
-PASS="pass"
-DB="owncloud"
+USERNAME="<set-username>"
+PASSWORD="<set-password>"
+DB="<set-db-name>"
 
 echo "******CREATING DOCKER DATABASE******"
 gosu postgres postgres --single <<- EOSQL
-CREATE USER $USERNAME WITH PASSWORD '$PASS';
+CREATE USER $USERNAME WITH PASSWORD '$PASSORD';
 CREATE DATABASE $DB TEMPLATE template0 ENCODING 'UNICODE';
 ALTER DATABASE $DB OWNER TO $USERNAME;
 GRANT ALL PRIVILEGES ON DATABASE $DB TO $USERNAME;

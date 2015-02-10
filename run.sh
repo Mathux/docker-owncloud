@@ -3,8 +3,10 @@
 # Run OwnCloud
 docker run \
     -d \
+    -p 80:80 \
+    -p 443:443 \
     --restart=always \
-    --name owncloud \
+    --name oc-server \
     --link oc-postgres:db \
     --volumes-from oc-data-files \
-    owncloud
+    oc-server
