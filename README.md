@@ -12,8 +12,8 @@ for both files and database.
 
 You will end up with the following Docker containers :
 
-- `oc-data-files` : OwnCloud files (`owncloud/data` and `owncloud/config`)
-- `oc-data-db` : OwnCloud Database (`/var/lib/prosgresql/data`)
+- `oc-data-files` : Storage for OwnCloud files (`owncloud/data` and `owncloud/config`)
+- `oc-data-db` : Storage for OwnCloud database (`/var/lib/prosgresql/data`)
 - `oc-postgres` : Container running the Database (`Postgresql`)
 - `oc-server` : Container running the server (`Apache2` on Fedora)
 
